@@ -1,5 +1,8 @@
 <?php
 
+use App\Mail\MailableA;
+use App\Mail\MailableB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/test', function () {
+    $mailableA = new MailableA();
+    $mailableB = new MailableB();
+
+    logger('-------------------------------------------');
+    logger('email A');
+    Mail::mailer('log')->to('test@email.com')->send($mailableA);
+
+    logger('-------------------------------------------');
+    logger('email B');
+    Mail::mailer('log')->to('test@email.com')->send($mailableB);
+
+    return;
 });
